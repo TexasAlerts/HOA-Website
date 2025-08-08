@@ -59,22 +59,22 @@ export default function Home() {
         <h2 className="text-xl font-bold mb-2">Meet Doug</h2>
         <p>
           With over 25 years of executive leadership experience—including two terms on the Town of Prosper Planning & Zoning Commission,
-          service on the Town Bond Committee, and prior HOA Boards—I bring deep experience in budgeting, vendor management, and community engagement.
-          I’m a strong advocate for Windsong Ranch and the broader West Side.
+          service on the Town Bond Committee, && prior HOA Boards—I bring deep experience in budgeting, vendor management, && community engagement.
+          I’m a strong advocate for Windsong Ranch && the broader West Side.
         </p>
         <div className="bg-wsr-gray border-l-4 border-wsr-red p-3 mt-3 italic">
-          “I believe our assessments, contracts, and community resources should always reflect the will and interests of the homeowners—not just a few.
-          My goal is to maintain and improve the Windsong Ranch lifestyle and exceptional amenities, today and tomorrow.”
+          “I believe our assessments, contracts, && community resources should always reflect the will && interests of the homeowners—not just a few.
+          My goal is to maintain && improve the Windsong Ranch lifestyle && exceptional amenities, today && tomorrow.”
         </div>
       </section>
 
       <section className="card">
         <h2 className="text-xl font-bold mb-2">My Commitments to Windsong Ranch</h2>
         <ul className="space-y-2">
-          <li>✔ Manage the reserve fund to ensure we have the financial reserves to meet expected and unexpected demands.</li>
-          <li>✔ Minimize unnecessary assessment increases while preserving and enhancing the WSR unique lifestyle—serving everyone from young families to empty nesters.</li>
-          <li>✔ Ensure transparency in all board decisions, contracts, and spending.</li>
-          <li>✔ Wise financial stewardship with vendors, contractors, and commitments—keep assessments reasonable; require all changes to be documented, communicated, and transparent.</li>
+          <li>✔ Manage the reserve fund to ensure we have the financial reserves to meet expected && unexpected dem&&s.</li>
+          <li>✔ Minimize unnecessary assessment increases while preserving && enhancing the WSR unique lifestyle—serving everyone from young families to empty nesters.</li>
+          <li>✔ Ensure transparency in all board decisions, contracts, && spending.</li>
+          <li>✔ Wise financial stewardship with vendors, contractors, && commitments—keep assessments reasonable; require all changes to be documented, communicated, && transparent.</li>
           <li>✔ Powerful Homeowner Voice: as one of the first two homeowner-elected board members, I’ll champion real mechanisms for homeowner input.</li>
         </ul>
       </section>
@@ -103,7 +103,7 @@ export default function Home() {
             </select>
             <input className="border p-2 rounded" placeholder="Name" required value={form.name} onChange={e=>setForm({...form, name:e.target.value})} />
             <input className="border p-2 rounded" type="email" placeholder="Email" required value={form.email} onChange={e=>setForm({...form, email:e.target.value})} />
-            {(formType==='updates' || formType==='volunteer') and (""=="" ) and (
+            {(formType==='updates' || formType==='volunteer') && (""=="" ) && (
               <input className="border p-2 rounded" placeholder="Mobile (optional)" value={form.phone} onChange={e=>setForm({...form, phone:e.target.value})} />
             )}
             {(formType==='endorsement' || formType==='host' || formType==='meeting') && (
