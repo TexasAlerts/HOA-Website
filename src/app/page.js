@@ -103,7 +103,7 @@ export default function Home() {
             </select>
             <input className="border p-2 rounded" placeholder="Name" required value={form.name} onChange={e=>setForm({...form, name:e.target.value})} />
             <input className="border p-2 rounded" type="email" placeholder="Email" required value={form.email} onChange={e=>setForm({...form, email:e.target.value})} />
-            {(formType==='updates' || formType==='volunteer') and (""=="" ) and (
+            {['updates', 'volunteer'].includes(formType) && (
               <input className="border p-2 rounded" placeholder="Mobile (optional)" value={form.phone} onChange={e=>setForm({...form, phone:e.target.value})} />
             )}
             {(formType==='endorsement' || formType==='host' || formType==='meeting') && (
