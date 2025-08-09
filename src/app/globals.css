@@ -1,99 +1,28 @@
-/* Tailwind layers */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ---- Base / resets ---- */
-html, body {
-  height: 100%;
-}
+:root { color-scheme: light; }
+html { scroll-behavior: smooth; }
+body { @apply bg-white text-charcoal antialiased; }
 
-html {
-  /* smooth in-page anchor scroll (e.g., #get-involved) */
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+/* Headings & text */
+.h1 { @apply font-heading text-4xl sm:text-5xl leading-tight tracking-tight; }
+.h2 { @apply font-heading text-2xl sm:text-3xl leading-snug; }
+.subtle { @apply text-gray-600; }
 
-body {
-  @apply bg-white text-gray-900 antialiased;
-  text-rendering: optimizeLegibility;
-}
+/* Buttons */
+.btn { @apply inline-flex items-center justify-center rounded-2xl px-5 py-3 transition-shadow shadow-sm; }
+.btn-primary { @apply bg-lagoon text-white hover:bg-lagoon-700; }
+.btn-secondary { @apply border border-lagoon text-lagoon hover:bg-lagoon/5; }
+.btn-accent { @apply bg-coral text-white hover:bg-coral-700; }
 
-/* Make sure images never overflow containers */
-img, svg, video, canvas, audio, iframe, embed, object {
-  display: block;
-  max-width: 100%;
-}
+/* Cards */
+.card { @apply rounded-2xl bg-white shadow-card border border-gray-100; }
+.section { @apply py-10 sm:py-16; }
 
-/* Better default for long words in paragraphs and headings */
-p, h1, h2, h3, h4, h5, h6 {
-  overflow-wrap: anywhere;
-}
+/* Utility fix for next/image object positioning (if needed) */
+.portrait-object-top { object-position: 50% 20% !important; }
 
-/* Links */
-a {
-  color: inherit;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: none;
-}
-
-/* Accessible focus styles */
-:focus {
-  outline: none;
-}
-:focus-visible {
-  outline: 2px solid #ef4444; /* Tailwind red-500 */
-  outline-offset: 2px;
-  border-radius: 0.5rem;
-}
-
-/* ---- Forms (light defaults; most styling via Tailwind classes) ---- */
-input, select, textarea, button {
-  font: inherit;
-}
-input::placeholder,
-textarea::placeholder {
-  color: #9ca3af; /* gray-400 */
-}
-
-/* ---- Helpers / Components (optional) ---- */
-
-/* Generic button helper classes (useful if you want className="btn btn-red") */
-.btn {
-  @apply inline-flex items-center justify-center rounded-2xl px-5 py-3 transition;
-}
-.btn-red {
-  @apply bg-red-600 text-white hover:bg-red-700;
-}
-.btn-outline {
-  @apply border border-red-600 text-red-700 hover:bg-red-50;
-}
-
-/* Section spacing helper if you choose to use .section wrappers */
-.section {
-  @apply py-10 sm:py-14 lg:py-16;
-}
-
-/* Card helper */
-.card {
-  @apply rounded-2xl border bg-white shadow-sm;
-}
-
-/* ---- Headshot / media tweaks ---- */
-
-/* If you use a circular headshot container with next/image "object-cover",
-   this keeps the face a bit higher in *portrait* phone orientation.
-   Add className="portrait-object-top" to the <Image> if you want this behavior. */
-@media (max-width: 640px) and (orientation: portrait) {
-  .portrait-object-top {
-    object-position: 50% 20% !important; /* center horizontally, nudge up vertically */
-  }
-}
-
-/* Utility to prevent full-viewport overlays by mistake (debug aid)
-   Add to a wrapper if something tries to overflow weirdly on mobile */
-.safe-content {
-  contain: content;
-}
+/* Sticky banner layout reserve */
+.banner-spacer { height: 56px; }
