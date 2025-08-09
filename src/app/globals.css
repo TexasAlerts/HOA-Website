@@ -1,8 +1,14 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body { @apply bg-wsr-gray text-wsr-navy; }
-a { @apply text-wsr-red; }
-.btn { @apply bg-wsr-red text-white font-bold py-2 px-4 rounded hover:bg-red-800; }
-.card { @apply bg-white shadow-xl rounded-xl p-6; }
+/* Smooth scroll for in-page anchors like #get-involved */
+html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Mobile-portrait headshot alignment
+     Keeps the face centered on desktop/tablet and landscape,
+     but nudges the focal point to the top-center on narrow portrait. */
+  @media (max-width: 640px) and (orientation: portrait) {
+    .portrait-headshot img {
+      object-position: top center !important;
+    }
+  }
+  

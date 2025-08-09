@@ -1,120 +1,207 @@
-'use client';
-import { useEffect, useState } from 'react';
+"use client";
 
-export default function Home() {
-  const [formType, setFormType] = useState('updates');
-  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
-  const [thanks, setThanks] = useState(false);
-  const [endorsements, setEndorsements] = useState([]);
+import Image from "next/image";
+import { useRef } from "react";
 
-  useEffect(() => {
-    async function load() {
-      const res = await fetch('/api/endorsements', { cache: 'no-store' });
-      const data = await res.json();
-      setEndorsements(data || []);
-    }
-    load();
-  }, []);
+export default function HomePage() {
+  // Ref to the forms block
+  const getInvolvedRef = useRef(null);
 
-  async function submit(e) {
+  const scrollToForms = (e) => {
     e.preventDefault();
-    const type = formType;
-    if (type === 'endorsement') {
-      await fetch('/api/endorsements', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: form.name, reason: form.message })
-      });
-    } else {
-      await fetch('/api/interest', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, type })
-      });
-    }
-    setThanks(true);
-    setForm({ name: '', email: '', phone: '', message: '' });
-  }
+    getInvolvedRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
-    <div className="space-y-8">
-      <section className="card">
-        <div className="flex items-center justify-between">
+    <main className="min-h-screen">
+      {/* HERO */}
+      <section className="relative bg-white">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          {/* Left: Text & Buttons */}
           <div>
-            <div className="text-4xl font-extrabold text-wsr-red tracking-widest">VOTE</div>
-            <h1 className="text-2xl font-bold mt-2">Doug Charles for Windsong Ranch HOA Board of Directors</h1>
-            <p className="text-sm mt-1">Transparency. Stewardship. Listening.</p>
-            <p className="mt-3 italic">“Whether you live in the townhomes, the villas, or any neighborhood in Windsong Ranch, I will be an active representative for you.”</p>
-            <div className="mt-4 flex gap-3">
-              <a className="btn" href="/endorsements">Endorse Doug</a>
-              <a className="btn" href="#get-involved">Get Involved</a>
-              <a className="btn" href="/voting">Voting Info</a>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+              A Transparent, Accountable HOA—Built With You.
+            </h1>
+            <p className="mt-4 text-base sm:text-lg text-gray-700">
+              Let’s protect home values, keep assessments in check, and strengthen our community through
+              clear communication and owner involvement.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              {/* Endorse Doug → scrolls to forms (same as Get Involved) */}
+              <a
+                href="#get-involved"
+                onClick={scrollToForms}
+                className="inline-flex items-center justify-center rounded-2xl px-5 py-3 text-white bg-red-600 hover:bg-red-700 transition"
+              >
+                Endorse Doug
+              </a>
+
+              {/* Get Involved → also scrolls to forms */}
+              <a
+                href="#get-involved"
+                onClick={scrollToForms}
+                className="inline-flex items-center justify-center rounded-2xl px-5 py-3 border border-red-600 text-red-700 hover:bg-red-50 transition"
+              >
+                Get Involved
+              </a>
             </div>
           </div>
-          <img src="/headshot.jpg" alt="Doug Charles" className="h-32 w-32 rounded-full border-4 border-wsr-navy shadow-lg" />
+
+          {/* Right: Headshot (mobile portrait fix) */}
+          <div className="flex justify-center lg:justify-end">
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden shadow-lg portrait-headshot">
+              {/* 
+                NOTE: Update the src below to your actual image path if different.
+                Example valid paths: /headshot.jpg, /images/doug.jpg (must live in /public)
+              */}
+              <Image
+                src="/headshot.jpg"
+                alt="Doug Charles"
+                fill
+                priority
+                sizes="(max-width: 1024px) 256px, 288px"
+                className="object-cover object-center sm:object-center md:object-center lg:object-center"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="card">
-        <h2 className="text-xl font-bold mb-2">Meet Doug</h2>
-        <p>
-          With over 25 years of executive leadership experience—including two terms on the Town of Prosper Planning & Zoning Commission,
-          service on the Town Bond Committee, and prior HOA Boards—I bring deep experience in budgeting, vendor management, and community engagement.
-          I’m a strong advocate for Windsong Ranch and the broader West Side.
-        </p>
-        <div className="bg-wsr-gray border-l-4 border-wsr-red p-3 mt-3 italic">
-          “I believe our assessments, contracts, and community resources should always reflect the will and interests of the homeowners—not just a few.
-          My goal is to maintain and improve the Windsong Ranch lifestyle and exceptional amenities, today and tomorrow.”
-        </div>
-      </section>
-
-      <section className="card">
-        <h2 className="text-xl font-bold mb-2">My Commitments to Windsong Ranch</h2>
-        <ul className="space-y-2">
-          <li>✔ Manage the reserve fund to ensure we have the financial reserves to meet expected and unexpected dem&&s.</li>
-          <li>✔ Minimize unnecessary assessment increases while preserving and enhancing the WSR unique lifestyle—serving everyone from young families to empty nesters.</li>
-          <li>✔ Ensure transparency in all board decisions, contracts, and spending.</li>
-          <li>✔ Wise financial stewardship with vendors, contractors, and commitments—keep assessments reasonable; require all changes to be documented, communicated, and transparent.</li>
-          <li>✔ Powerful Homeowner Voice: as one of the first two homeowner-elected board members, I’ll champion real mechanisms for homeowner input.</li>
-        </ul>
-      </section>
-
-      <section className="card">
-        <h2 className="text-xl font-bold mb-2">Recent Endorsements</h2>
-        <div className="h-24 overflow-y-auto bg-wsr-gray rounded p-2">
-          <ul className="space-y-1 text-sm">
-            {endorsements.map(e => (
-              <li key={e.id}><b>{e.name}</b>{e.reason ? <span className="italic ml-1">— {e.reason}</span> : null}</li>
-            ))}
+      {/* RECENT HIGHLIGHTS (optional content block) */}
+      <section className="bg-gray-50">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+          <h2 className="text-2xl font-semibold">Priorities</h2>
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+            <li className="rounded-xl border p-4 bg-white">Fiscal transparency and strong reserves</li>
+            <li className="rounded-xl border p-4 bg-white">Community engagement via owner committees</li>
+            <li className="rounded-xl border p-4 bg-white">Vendor accountability and clear performance</li>
+            <li className="rounded-xl border p-4 bg-white">Protecting home values and the WSR lifestyle</li>
           </ul>
         </div>
       </section>
 
-      <section id="get-involved" className="card">
-        <h2 className="text-xl font-bold mb-2">Get Involved</h2>
-        {!thanks ? (
-          <form onSubmit={submit} className="grid grid-cols-1 gap-3">
-            <select className="border p-2 rounded" value={formType} onChange={e=>setFormType(e.target.value)}>
-              <option value="updates">Join Email/Text List</option>
-              <option value="endorsement">Endorse Doug</option>
-              <option value="volunteer">Volunteer: Door Knock</option>
-              <option value="host">Host Home Meeting</option>
-              <option value="meeting">Request a Meeting</option>
-            </select>
-            <input className="border p-2 rounded" placeholder="Name" required value={form.name} onChange={e=>setForm({...form, name:e.target.value})} />
-            <input className="border p-2 rounded" type="email" placeholder="Email" required value={form.email} onChange={e=>setForm({...form, email:e.target.value})} />
-            {(formType==='updates' || formType==='volunteer') && (""=="" ) && (
-              <input className="border p-2 rounded" placeholder="Mobile (optional)" value={form.phone} onChange={e=>setForm({...form, phone:e.target.value})} />
-            )}
-            {(formType==='endorsement' || formType==='host' || formType==='meeting') && (
-              <textarea className="border p-2 rounded" rows={3} placeholder={formType==='endorsement' ? 'Why do you endorse Doug?' : 'Message (optional)'} value={form.message} onChange={e=>setForm({...form, message:e.target.value})}></textarea>
-            )}
-            <button className="btn" type="submit">Submit</button>
-          </form>
-        ) : (
-          <div className="bg-green-100 text-green-700 p-3 rounded text-center font-semibold">Thank you—your submission was received!</div>
-        )}
+      {/* FORMS: GET INVOLVED (anchor target) */}
+      <section id="get-involved" ref={getInvolvedRef} className="bg-white scroll-mt-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+          <h2 className="text-2xl font-semibold">Get Involved</h2>
+          <p className="mt-2 text-gray-600">
+            Choose how you’d like to participate—endorse, volunteer, host, or request a meeting.
+          </p>
+
+          {/* 
+            Replace the simple forms below with your existing selectable forms UI if you already have it.
+            The important part is the #get-involved anchor above and both buttons scrolling here.
+          */}
+
+          <div className="mt-6 grid gap-6 lg:grid-cols-2">
+            {/* Endorse form */}
+            <form
+              className="rounded-2xl border p-5"
+              method="POST"
+              action="/api/endorsements"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const form = new FormData(e.currentTarget);
+                const payload = {
+                  name: form.get("name")?.toString() || "",
+                  message: form.get("message")?.toString() || "",
+                };
+                const res = await fetch("/api/endorsements", {
+                  method: "POST",
+                  headers: { "content-type": "application/json" },
+                  body: JSON.stringify(payload),
+                });
+                if (res.ok) {
+                  alert("Thank you for your endorsement! It may appear once approved.");
+                  e.currentTarget.reset();
+                } else {
+                  const j = await res.json().catch(() => ({}));
+                  alert(j?.error || "Something went wrong.");
+                }
+              }}
+            >
+              <h3 className="text-lg font-semibold">Endorse Doug</h3>
+              <div className="mt-4 grid gap-3">
+                <input
+                  name="name"
+                  required
+                  placeholder="Your name"
+                  className="border rounded-lg p-3"
+                />
+                <textarea
+                  name="message"
+                  rows={4}
+                  placeholder="Optional message"
+                  className="border rounded-lg p-3"
+                />
+                <button
+                  type="submit"
+                  className="rounded-xl bg-red-600 hover:bg-red-700 text-white px-5 py-3"
+                >
+                  Submit Endorsement
+                </button>
+              </div>
+            </form>
+
+            {/* Interest / Get Involved form */}
+            <form
+              className="rounded-2xl border p-5"
+              method="POST"
+              action="/api/interest"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const form = new FormData(e.currentTarget);
+                const payload = {
+                  type: form.get("type")?.toString() || "updates",
+                  name: form.get("name")?.toString() || "",
+                  email: form.get("email")?.toString() || "",
+                  phone: form.get("phone")?.toString() || "",
+                  message: form.get("message")?.toString() || "",
+                };
+                const res = await fetch("/api/interest", {
+                  method: "POST",
+                  headers: { "content-type": "application/json" },
+                  body: JSON.stringify(payload),
+                });
+                if (res.ok) {
+                  alert("Thanks—you're in! We'll be in touch.");
+                  e.currentTarget.reset();
+                } else {
+                  const j = await res.json().catch(() => ({}));
+                  alert(j?.error || "Something went wrong.");
+                }
+              }}
+            >
+              <h3 className="text-lg font-semibold">Get Involved</h3>
+              <div className="mt-4 grid gap-3">
+                <select name="type" className="border rounded-lg p-3">
+                  <option value="updates">Get Updates</option>
+                  <option value="volunteer">Volunteer</option>
+                  <option value="host">Host a Home Meeting</option>
+                  <option value="meeting">Request a Meeting</option>
+                </select>
+
+                <input name="name" required placeholder="Name" className="border rounded-lg p-3" />
+                <input name="email" type="email" required placeholder="Email" className="border rounded-lg p-3" />
+
+                {/* Mobile number shows for updates/volunteer (optional) */}
+                {/* If you want conditional show/hide, we can wire that up later. */}
+                <input name="phone" placeholder="Mobile (optional)" className="border rounded-lg p-3" />
+
+                <textarea name="message" rows={4} placeholder="Message (optional)" className="border rounded-lg p-3" />
+
+                <button
+                  type="submit"
+                  className="rounded-xl bg-red-600 hover:bg-red-700 text-white px-5 py-3"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </section>
-    </div>
+    </main>
   );
 }
