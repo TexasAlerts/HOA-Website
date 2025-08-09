@@ -1,14 +1,10 @@
-/* Smooth scroll for in-page anchors like #get-involved */
-html {
-    scroll-behavior: smooth;
+/* Smooth in-page anchor scroll */
+html { scroll-behavior: smooth; }
+
+/* Keep the headshot’s focal point toward the upper-center on narrow portrait,
+   so your face stays visible and the image never overwhelms the hero text */
+@media (max-width: 640px) and (orientation: portrait) {
+  .portrait-object-top {
+    object-position: 50% 20% !important; /* center horizontally, nudge up vertically */
   }
-  
-  /* Mobile-portrait headshot alignment
-     Keeps the face centered on desktop/tablet and landscape,
-     but nudges the focal point to the top-center on narrow portrait. */
-  @media (max-width: 640px) and (orientation: portrait) {
-    .portrait-headshot img {
-      object-position: top center !important;
-    }
-  }
-  
+}
