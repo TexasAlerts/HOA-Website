@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRef } from "react";
 
-export default function Page() {
+export default function Home() {
   const getInvolvedRef = useRef(null);
 
   const scrollToForms = (e) => {
@@ -16,7 +16,6 @@ export default function Page() {
       {/* HERO */}
       <section className="bg-white">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-16">
-          {/* On mobile we stack text first, image second */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {/* Left: Text & Buttons */}
             <div className="text-center lg:text-left">
@@ -46,25 +45,22 @@ export default function Page() {
               </div>
             </div>
 
-            {/* Right: Headshot (safe, simple sizing) */}
+            {/* Right: Headshot — no absolute/fill, fixed size only */}
             <div className="flex justify-center lg:justify-end">
-              <div className="relative w-44 h-44 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden shadow-lg">
-                {/* Update src to your actual image path in /public if different */}
-                <Image
-                  src="/headshot.jpg"
-                  alt="Doug Charles"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 256px, 288px"
-                  className="object-cover object-center portrait-object-top"
-                />
-              </div>
+              <Image
+                src="/headshot.jpg"   // your file lives in /public/headshot.jpg
+                alt="Doug Charles"
+                width={288}            // 18rem
+                height={288}
+                priority
+                className="rounded-full object-cover"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* CONTENT BLOCK (example) */}
+      {/* CONTENT BLOCK */}
       <section className="bg-gray-50 border-t">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
           <h2 className="text-2xl font-semibold">Priorities</h2>
